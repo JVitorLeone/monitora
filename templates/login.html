@@ -1,0 +1,84 @@
+{% extends 'base_generic.html' %}
+{% load static %}
+
+{% block title %} <title>Monitora - Login</title> {% endblock %}
+
+{% block nav %}
+<nav class="navbar navbar-expand-lg navbar-dark justify-content-between">
+  <a class="navbar-brand" href="#">MONITORA</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link nav-links" href="{% url 'index' %}">INÍCIO</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link nav-links link-center" href="#">PRODUTOS</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link nav-links" href="#">SOBRE</a></a>
+      </li>
+    </ul>
+
+  </div>
+</nav>
+{% endblock %}
+
+
+
+{% block content %}
+<div class="esquerda">
+</div>
+
+<div class="container-fluid jumbotron formulario divlogin">
+    {% if messages %}
+  <div class="container-fluid col-10">
+      {% for message in messages%}
+    <div class="alert {{ message.tags }} col-12 ">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">&times;</button>
+      <span data-feather="alert-circle" id="alert-icon"></span>
+      
+      {{ message }}
+      
+      </div>
+      {% endfor %}
+    
+  </div>
+  {% endif %}
+
+  <div class="row justify-content-center">
+    <h2>Login</h2>
+  </div>
+
+  <hr class="my-3">
+
+  <form method="POST">
+    {% csrf_token %}
+    <div class="form-inline">
+      <span data-feather="user" class="col-2 login-icon"></span>
+      {{ form.username }}
+    </div>
+    <div class="form-inline">
+      <span data-feather="lock" class="col-2 login-icon"></span>
+      {{ form.password }}
+      {{ form.password.errors }}
+    </div>
+    <button type="submit" class="btn button-custom col" id="loginSubmit">Entrar</button>
+  </form>
+
+
+  <hr class="my-3">
+
+  <div class="row justify-content-center">
+    <p class="small">Ainda não é cadastrado?</p>
+    <div class="w-100"></div>
+    <a class="btn button-outline-custom" href="{% url 'cadastrar' %}" role="button">Cadastre-se</a>
+  </div>
+
+</div>
+
+{% endblock %}

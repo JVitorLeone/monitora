@@ -1,0 +1,51 @@
+{% extends 'base_generic.html' %}
+{% load static %}
+
+{% block content %}
+<div class="jumbotron">
+    <h1 class="display-4">Bem vindo ao Monitora!</h1>
+    <p class="lead">
+        Nosso site é capaz de monitorar os preços para você!
+        <hr class="my-3">
+
+        Ficou interessado em algum produto e quer saber quando o preço dele
+        irá abaixar? Entre com a URL do produto ofertado para monitorar seu preço
+    </p>
+
+
+    <a class="btn button-outline-custom btn-lg" href="#" role="button">Saiba mais</a>
+</div>
+<div class="jumbotron">
+    <p class="lead">Veja os produtos já monitorados pelo site: </p>
+    <hr class="my-3">
+
+    <div class="row row-produtos">
+        <div class="card divCentro">
+            <div class="card-title">
+                <h5 class="card-title">Nome</h5>
+            </div>
+            <div class="card-body">
+
+                <p class="card-text">Descrição</p>
+                <p>Preço atual:</p>
+                <a href="#" class="btn button-outline-custom">Ir para o site</a>
+            </div>
+        </div>
+        {% for produto in produtos %}
+        <div class="card" >
+
+            <div class="card-title">
+                <h5 class="card-text-title">{{produto.nome}}</h5>
+            </div>
+            <div class="card-body">
+
+                <p class="card-text">{{produto.descricao}}</p>
+                <p>Preço atual: {{produto.preco_atual}}</p>
+                <a href="#" class="btn button-outline-custom">Ir para o site</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

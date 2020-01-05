@@ -1,0 +1,97 @@
+{% extends 'base_generic.html' %}
+{% load static %}
+
+{% block title %}
+<title>Monitora - Meus produtos</title>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid usuario">
+    <div class="sidebar-user">
+        <div class="list-group">
+            <a class="btn list-group-item" id="button-detalhes" href="{% url 'user:painel' %}">
+                <span data-feather="user" class="sidebar-icon"></span>Dados pessoais</a>
+            <a class="btn list-group-item active" id="button-produto" href=""><span data-feather="package"
+                    class="sidebar-icon"></span>Produtos cadastrados</a>
+        </div>
+    </div>
+    <div class="user-details">
+            <div class="container" id="messages">
+                    {% if messages %}
+                        {% for message in messages%}
+                        <div class="alert {{ message.tags }} col">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">&times;</button>
+                            <span data-feather="alert-circle" id="alert-icon"></span>
+            
+                            {{ message }}
+            
+                        </div>
+                        {% endfor %}
+            
+                    {% endif %}
+                </div>
+
+        <div class="detalhes-produtos">
+            <div id="userbody" class="user-body">
+                <div class="row page-title justify-content-between">
+                    <h3>Seus produtos: </h3>
+                    <a class="btn button-outline-custom" href="{% url 'produtos:cadastro_produtos' %}">Cadastrar novo produto</a>
+                </div>
+                <div class="row justify-content-center produtos-display">
+            
+            
+                    {% for produto in produtos %}
+                    <div class="card card-expandable" id="{{ produto.id_produto }}">
+        
+        
+                        <div class="card-body">
+                            <a href="{{ produto.url }}" target="_blank" 
+                                class="urllink" title="Ir para o site">
+                                <span data-feather="external-link"></span></a>
+
+                            <h2 class="card-text-descricao">{{produto.nome}}</h2>
+                            <p class="card-text-preco">{{produto.descricao}}</p>
+                            <div class="row justify-content-around card-btn">
+                                <a href="{% url 'user:detalhe_prod' produto.id_produto %}" 
+                                class="btn button-outline-custom"><span data-feather="plus-circle"></span>
+                                 Detalhes</a>
+                                <button title="Excluir produto" class="btn btn-outline-danger delete_prod delete_prod_btn" id="delete_prod_btn"
+                                prod_id="{{ produto.id_produto }}"><span class="adiciona_icon" data-feather="x"></span></button>
+                            </div>
+                        </div>
+                        <div class="card-title">
+                            <h5 class="card-text-title">Preço atual: {{produto.preco_atual}}</h5>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAIS -->
+
+
+<div class="modal fade" id="deleteProdModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Deletar produto</h5>
+                <button type="button" class="close" id="delete_close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Deseja mesmo excluir este produto?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline-danger deleteBtn" id="deleteBtn">Excluir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'base_generic.html' %}
+{% load static %}
+
+{% block title %} <title>Monitora - Produtos</title> {% endblock %}
+
+{% block content %}
+<div class="container-fluid produtos-page">
+    <div class="container-fluid row row-produtos produtos">
+        <div class="container-fluid row justify-content-around page-title">
+            <h3 class="col-6 title">Produtos cadastrados no site: </h3>
+            <form class="form-inline my-2 my-lg-0 justify-content-end col-6" id="sort-products" method="POST">
+                {% csrf_token %}
+                {% for field in sort_form %}
+                {# {{ field.errors }} #}
+                {{ field }}
+                {% endfor %}
+                <button class="btn button-outline-custom my-2 my-sm-0" type="submit">Buscar</button>
+            </form>
+        </div>
+        <div class="row justify-content-center produtos-display">
+            
+            
+            {% for produto in produtos %}
+            <div class="card card-expandable">
+
+
+                <div class="card-body">
+
+                    <h2 class="card-text-descricao">{{produto.nome}}</h2>
+                    <p class="card-text-preco">{{produto.descricao}}</p>
+                    <div class="row justify-content-around card-btn">
+                        <a id="urllink" href="{{ produto.url }}" target="_blank" class="btn button-outline-custom">Ir
+                            para o site</a>
+                        {% if user.is_authenticated %}
+                        <button title="Adicionar a meus produtos" class="btn btn-success adiciona_produto" 
+                        prod_id="{{ produto.id_produto }}"><span class="adiciona_icon" data-feather="plus"></span></button>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-title">
+                    <h5 class="card-text-title">Preço atual: {{produto.preco_atual}}</h5>
+                </div>
+            </div>
+            {% endfor %}
+            {% for prod_user in produtos_user %}
+            <div class="card card-expandable">
+
+
+                <div class="card-body">
+
+                    <h2 class="card-text-descricao">{{prod_user.nome}}</h2>
+                    <p class="card-text-preco">{{prod_user.descricao}}</p>
+                    <div class="row justify-content-around card-btn">
+                        <a id="urllink" href="{{ prod_user.url }}" target="_blank" class="btn button-outline-custom">Ir
+                            para o site</a>
+                        {% if user.is_authenticated %}
+                        <button title="Este produto já está na sua lista" class="btn btn-success adiciona_produto disabled" 
+                        prod_id="{{ prod_user.id_produto }}"><span class="adiciona_icon" data-feather="check"></span></button>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-title">
+                    <h5 class="card-text-title">Preço atual: {{prod_user.preco_atual}}</h5>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  {% block title %}<title>Monitora</title>{% endblock %}
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Baloo+Chettan|Cabin|Abel|Livvic|Righteous|Montserrat&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}">
+</head>
+
+<body>
+
+  {% block nav %}
+  <nav class="navbar navbar-expand-lg navbar-dark justify-content-between">
+    <p class="navbar-brand">MONITORA</p>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span data-feather="menu"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active" id="navLink-Inicio">
+          <a class="nav-link nav-links" href="{% url 'index' %}">INÍCIO</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link nav-links dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            PRODUTOS
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{% url 'produtos:cadastro_produtos' %}">Cadastrar produto</a>
+            <a class="dropdown-item" href="{% url 'user:painel_produtos' %}">Meus produtos monitorados</a>
+            <a class="dropdown-item" href="{% url 'produtos:produtos' %}">Todos os produtos</a>
+          </div>
+        </li>
+       
+        <li class="nav-item" id="navLink-Sobre">
+          <a class="nav-link nav-links" href="#">SOBRE</a></a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav btn-login">
+          {% if user.is_authenticated %}
+        
+        <li class="nav-item dropdown" id="user-item">
+          <a class="nav-link nav-links dropdown-toggle" href="#" id="navbarDropdown-user" role="button"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span data-feather="user"></span>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="dropdown-menu-user">
+            <a class="dropdown-item" href="{% url 'user:painel' %}">Minha Conta</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{% url 'sair' %}">Sair</a>
+          </div>
+        </li>
+        {% else %}
+        <a class="nav-link nav-links navbar-right" href="{% url 'entrar' %}">ENTRAR</a>
+        {% endif %}
+        </li>
+      </ul>
+    </div>
+  </nav>
+  {% endblock %}
+
+
+  {% block content %} {% endblock %}
+
+
+  <script type="text/javascript" src="{% static '/js/jquery-3.4.1.min.js' %}"></script>
+  <script type="text/javascript" src="{% static '/js/popper.min.js' %}"></script>
+  <script type="text/javascript" src="{% static '/js/bootstrap.js' %}"></script>
+  <script type="text/javascript" src="{% static '/js/feather.js' %}"></script>
+  <script type="text/javascript" src="{% static '/js/Chart.js' %}"></script>
+  <script type="text/javascript" src="{% static '/js/custom.js' %}"></script>
+</body>
+
+</html>

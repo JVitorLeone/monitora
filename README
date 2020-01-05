@@ -1,0 +1,15 @@
+---  Site MONITORA ---
+
+Para a execução desse projeto é necessária a que a máquina possua a 
+instalação do Python 3.7.4 ou superior e o gerenciador de pacotes pip 19.2.1 ou superior.
+
+A configuração do banco de dados se faz no arquivo settings.py (django/siteMonitora/siteMonitora/settings.py)
+na variável 'DATABASES'.
+
+Antes de rodar o servidor é necessário fazer alguns procedimentos na pasta 'django/siteMonitora' :
+    -   Rodar o comando 'pip install -r requirements.txt', para instalar as dependências;
+    -   Rodar o comando 'python manage.py makemigrations';
+    -   Rodar o comando 'python manage.py migrate', para criar as tabelas do banco de dados;
+    -   Rodar o comando 'python manage.py runserver', para rodar o servidor;
+
+    

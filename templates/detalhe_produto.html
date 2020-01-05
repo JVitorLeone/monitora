@@ -1,0 +1,147 @@
+{% extends 'base_generic.html' %}
+
+
+
+{% load static %}
+
+{% block title %}
+<title>Monitora - Produto / {{ produto.nome }}</title>
+{% endblock %}
+
+{% block content %}
+<script type="text/javascript">
+    var hist = {{ historico|safe }};
+
+</script>
+
+
+<div class="container-fluid usuario">
+        <div class="sidebar-user">
+                <div class="list-group">
+                    <a class="btn list-group-item" id="button-detalhes" href="{% url 'user:painel' %}">
+                        <span data-feather="user" class="sidebar-icon"></span>Dados pessoais</a>
+                    <a class="btn list-group-item active" id="button-produto" href="{% url 'user:painel_produtos' %}"><span data-feather="package"
+                            class="sidebar-icon"></span>Produtos cadastrados</a>
+                </div>
+            </div>
+    <div class="user-details">
+            <div class="container" id="messages">
+                    {% if messages %}
+                        {% for message in messages%}
+                        <div class="alert {{ message.tags }} col">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">&times;</button>
+                            <span data-feather="alert-circle" id="alert-icon"></span>
+            
+                            {{ message }}
+            
+                        </div>
+                        {% endfor %}
+            
+                    {% endif %}
+                </div>
+        <div class="detalhes-produtos">
+            <div id="userbody" class="user-body">
+                <div class="row page-title justify-content-between">
+                    <h3>{{ produto.nome }} </h3>
+                    <button title="Excluir produto" class="btn btn-danger delete_prod delete_prod_btn" id="delete_prod_btn"
+                    prod_id="{{ produto.id_produto }}">Excluir produto</button>
+                </div>
+                <div class="container-fluid row produtos-display detalhe-prod">
+            
+                    <div class="col">
+                                <div class="label row justify-content-between">
+                                    <label>Informações</label>
+                                    <button class="btn button-outline-custom button-page-user" data-toggle="modal"
+                                        data-target="#prodEditModal">Editar</button>
+                                </div>
+                                <div class="container-fluid info col">
+                                    <div class="row">
+                                        <div class="col-4"><b>Nome </b></div>
+                                        <div class="col-8">{{ produto.nome }}</div>
+                                    </div>
+                                    <hr class="my-2">
+                                    <div class="row">
+                                        <div class="col-4"><b>Data de cadastro </b></div>
+                                        <div class="col-8">{{ produto.data_cadastro }}</div>
+                                    </div>
+                                    <hr class="my-2">
+                                    <div class="row">
+                                        <div class="col-4"><b>URL </b></div>
+                                        <div class="col-8"><a href="{{ produto.url }}">{{ produto.url }}</a> </div>
+                                    </div>
+                                    <hr class="my-2">
+                                    <div class="row">
+                                        <div class="col-4"><b>Tempo de atualização  </b></div>
+                                        <div class="col-8">{{ produto.tempo_notificacao }} min.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                    <div class="label row justify-content-between">
+                                            <label>Histórico de Preço</label>
+                                    </div>
+                                    <canvas id="myChart" width="400" height="200"></canvas>
+                            </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- MODAIS -->
+
+<div class="modal fade" id="deleteProdModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Deletar produto</h5>
+                <button type="button" class="close" id="delete_close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Deseja mesmo excluir este produto?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline-danger deleteBtn" id="deleteBtn">Excluir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="prodEditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Informações do produto</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label>Nome</label>
+                        <input type="text" class="form-control loginInput cadastroInput" value="{{ produto.nome }}"
+                            id="id_nome" name="nome" required>
+                        <label>Tempo de atualização</label>
+                        <input type="number" class="form-control loginInput cadastroInput" max='3600' min='5' value="{{ produto.tempo_notificacao }}"
+                            id="id_tempo" name="tempo_atualizacao" required>
+                    </div>
+
+                    <button type="submit" class="btn button-outline-custom">Salvar alterações</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

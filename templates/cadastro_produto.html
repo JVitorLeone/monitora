@@ -1,0 +1,99 @@
+{% extends 'base_generic.html' %}
+{% load static %}
+
+{% block title %} <title>Monitora - Cadastro de Produto</title> {% endblock %}
+
+{% block content %}
+<div class="container-fluid produtos-page">
+
+    <div class="container-fluid row row-produtos produtos">
+        <div class="container" id="messages">
+        {% if messages %}
+            {% for message in messages%}
+            <div class="alert {{ message.tags }} col">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">&times;</button>
+                <span data-feather="alert-circle" id="alert-icon"></span>
+
+                {{ message }}
+
+            </div>
+            {% endfor %}
+
+        {% endif %}
+    </div>
+        <div class="jumbotron jumbotron-prod-form" id="url_form">
+                
+            <h1 class="display-4">Monitorar produto</h1>
+            
+            <p class="lead">Insira a URL do produto a ser monitorado</p>
+
+            <hr class="my-3">
+
+                {{ prod_form.url }}
+                <br>
+                <button class="btn button-outline-custom btn-lg" role="button" 
+                                    id="busca_produto">Buscar
+                    <span data-feather="search" id="search-icon"></span></button>
+            <br>
+            <br>
+            <div class="spinner-border" role="status" id="loading">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <div class="jumbotron jumbotron-prod-form" id="confirma_cadastro_form" style="display: none;">
+            <h1 class="display-4">Cadastrar produto</h1>
+            <hr class="my-3">
+            <form method="POST" id="prod-search-form">
+                {% csrf_token %}
+                <label for="id_url">URL</label>
+                {{ prod_form.url }}
+
+                <label for="id_nome">Nome produto </label>
+                {{ prod_form.nome }}
+                
+                <label for="id_preco_atual">Preço</label>
+                {{ prod_form.preco_atual }}
+                
+                <label for="id_tempo_notificacao">Tempo de atualização (min)</label>
+                {{ prod_form.tempo_notificacao }}
+                <br>
+                <button class="btn button-outline-custom btn-lg" role="button" type="submit"
+                    id="prod-search-btn">Monitorar
+                    <span data-feather="search" id="search-icon"></span></button>
+            </form>
+            <br>
+        </div>
+        <div class="page-title">
+            <h3 class="title">Seus produtos: </h3>
+        </div>
+        <div class="row justify-content-center produtos-display">
+            
+            {% for prod_user in produtos_user %}
+            <div class="card card-expandable" id="{{ prod_user.id_produto }}">
+        
+        
+                <div class="card-body">
+                    <a href="{{ prod_user.url }}" target="_blank" 
+                        class="urllink" title="Ir para o site">
+                        <span data-feather="external-link"></span></a>
+
+                    <h2 class="card-text-descricao">{{prod_user.nome}}</h2>
+                    <p class="card-text-preco">{{prod_user.descricao}}</p>
+                    <div class="row justify-content-around card-btn">
+                        <a href="{% url 'user:detalhe_prod' prod_user.id_produto %}" 
+                        class="btn button-outline-custom"><span data-feather="plus-circle"></span>
+                         Detalhes</a>
+                    </div>
+                </div>
+                <div class="card-title">
+                    <h5 class="card-text-title">Preço atual: {{prod_user.preco_atual}}</h5>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    </div>
+
+    <!-- MODAL -->
+    
+{% endblock %}

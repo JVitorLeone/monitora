@@ -1,0 +1,129 @@
+{% extends 'base_generic.html' %}
+{% load static %}
+
+{% block title %}
+<title>Monitora - Conta</title>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid usuario">
+    <div class="sidebar-user">
+        <div class="list-group">
+            <a class="btn list-group-item active" id="button-detalhes" href=""><span data-feather="user"
+                    class="sidebar-icon"></span>Dados pessoais</a>
+            <a class="btn list-group-item" id="button-produto" href="{% url 'user:painel_produtos' %}">
+                <span data-feather="package" class="sidebar-icon"></span>Produtos cadastrados</a>
+        </div>
+    </div>
+    <div class="user-details">
+            <div class="container" id="messages">
+                    {% if messages %}
+                        {% for message in messages %}
+                        <div class="alert {{ message.tags }} col">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">&times;</button>
+                            <span data-feather="alert-circle" id="alert-icon"></span>
+            
+                            {{ message }}
+            
+                        </div>
+                        {% endfor %}
+            
+                    {% endif %}
+                </div>
+        <div class="detalhes-user">
+            <div id="userheader" class="nav row user-header ">
+                <div class="user-image">
+                    <img id="user-image" src="{% static 'images/perfilzao.jpg' %}">
+                </div>
+                <div class="col user-name">
+                    <h1 class="h1">{{ user.first_name }} {{ user.last_name }}</h1>
+                    <p class="lead"> {{ usuario.email }}</p>
+                </div>
+            </div>
+            <div id="userbody" class="user-body">
+                <div class="label row justify-content-between">
+                    <label>Informações Pessoais </label>
+                    <button class="btn button-outline-custom button-page-user" data-toggle="modal"
+                        data-target="#userInfoModal">Editar</button>
+                </div>
+                <div class="info justify-content-center">
+                    <div class="container-fluid info col-5">
+                        <div class="row">
+                            <div class="col-4"><b>Nome </b></div>
+                            <div class="col-6">{{ user.first_name }} {{ user.last_name }}</div>
+                        </div>
+                        <hr class="my-2">
+                        <div class="row">
+                            <div class="col-4"><b>Email </b></div>
+                            <div class="col-6">{{ usuario.email }}</div>
+                        </div>
+                        <hr class="my-2">
+                        <div class="row">
+                            <div class="col-4"><b>Telefone </b></div>
+                            <div class="col-6">{{ usuario.telefone }}</div>
+                        </div>
+                        <hr class="my-2">
+                        <div class="row">
+                            <div class="col-4"><b>Data de Nascimento </b></div>
+                            <div class="col-6">{{ usuario.data_nascimento }}</div>
+                        </div>
+                        <hr class="my-2">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- MODAIS -->
+<div class="modal fade" id="userInfoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Informações Pessoais</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label>Nome</label>
+                        <input type="text" class="form-control loginInput cadastroInput" value="{{ user.first_name }}"
+                            id="id_first_name" name="first_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Sobrenome</label>
+                        <input type="text" class="form-control loginInput cadastroInput" value="{{ user.last_name }}"
+                            id="id_last_name" name="last_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" class="form-control loginInput cadastroInput" value="{{ usuario.email }}"
+                            id="id_email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Telefone</label>
+                        <input type="text" class="form-control loginInput cadastroInput" value="{{ usuario.telefone }}"
+                            id="id_telefone" name="telefone" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Data de nascimento</label>
+                        <input type="date" class="form-control loginInput cadastroInput"
+                            value="{{ usuario.parseBirthday }}" id="id_data_nascimento" name="data_nascimento" required>
+                    </div>
+                    <button type="submit" class="btn button-outline-custom">Salvar alterações</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
