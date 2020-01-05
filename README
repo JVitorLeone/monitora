@@ -1,5 +1,8 @@
 ---  Site MONITORA ---
 
+O MONITORA é um site de monitoramento de preços em sites de e-commerce. O projeto foi desenvolvido para a matéria 
+"Projeto Integrador II" do curso técnico de Desenvolvimento de Sistemas do IFSC - Câmpus Rau.
+
 Para a execução desse projeto é necessária a que a máquina possua a 
 instalação do Python 3.7.4 ou superior e o gerenciador de pacotes pip 19.2.1 ou superior.
 
